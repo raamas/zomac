@@ -1,0 +1,102 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #0a0d14;
+  --foreground: #f3f4f6;
+  --card: #121824;
+  --card-foreground: #f3f4f6;
+  --popover: #1e2638;
+  --popover-foreground: #f3f4f6;
+  --primary: #25d366;
+  --primary-foreground: #0b111e;
+  --secondary: #1e2638;
+  --secondary-foreground: #f3f4f6;
+  --muted: #1e2638;
+  --muted-foreground: #9ca3af;
+  --accent: #1a2233;
+  --accent-foreground: #f3f4f6;
+  --destructive: #f43f5e;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.14);
+  --ring: #25d366;
+  --radius: 0.625rem;
+  --chart-1: #25d366;
+  --chart-2: #6366f1;
+  --chart-3: #f59e0b;
+  --chart-4: #3b82f6;
+  --chart-5: #f43f5e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #075e54;
+  --color-whatsapp-hover: #1fba59;
+  --color-indigo-accent: #6366f1;
+  --color-amber-accent: #f59e0b;
+  --color-rose-accent: #f43f5e;
+  --color-blue-accent: #3b82f6;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@keyframes pulse-dot {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 1.8s infinite;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
