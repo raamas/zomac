@@ -34,6 +34,7 @@ export const CartDrawer = () => {
     config,
     updateCartQty,
     removeFromCart,
+    clearCart,
     generateWhatsAppUrl,
     setQrUrl,
     setIsQrOpen,
@@ -82,6 +83,16 @@ export const CartDrawer = () => {
             <Badge variant="secondary">
               {totalItems} {totalItems === 1 ? 'producto' : 'productos'}
             </Badge>
+            {cart.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="ml-auto text-muted-foreground hover:text-rose-accent"
+                onClick={clearCart}
+              >
+                <Trash2 size={14} /> Vaciar
+              </Button>
+            )}
           </div>
         </SheetHeader>
 

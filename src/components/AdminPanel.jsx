@@ -41,6 +41,7 @@ export const AdminPanel = () => {
     deleteProduct,
     addProduct,
     resetDemoStock,
+    clearAllProducts,
     importProducts,
     showToast,
   } = useShop();
@@ -172,6 +173,11 @@ export const AdminPanel = () => {
           </Button>
           <Button variant="secondary" onClick={resetDemoStock}>
             <RotateCcw size={18} /> Restablecer Stock Demo
+          </Button>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" className="border-rose-accent/50 text-rose-accent hover:bg-rose-accent/10 hover:text-rose-accent" onClick={clearAllProducts}>
+            <Trash2 size={18} /> Vaciar Catálogo (Temporal)
           </Button>
         </div>
         <div className="flex flex-wrap gap-2">

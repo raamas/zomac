@@ -124,6 +124,14 @@ export const ShopProvider = ({ children }) => {
     showToast('Producto eliminado del carrito');
   };
 
+  const clearCart = () => {
+    if (cart.length === 0) return;
+    if (window.confirm('¿Vaciar todo el carrito?')) {
+      setCart([]);
+      showToast('Carrito vaciado.');
+    }
+  };
+
   // Inventory / Stock Actions
   const updateStock = (productId, newStock) => {
     const stockVal = Math.max(0, isNaN(newStock) ? 0 : newStock);
@@ -156,6 +164,14 @@ export const ShopProvider = ({ children }) => {
     if (window.confirm('¿Restablecer inventario demo?')) {
       setProducts(DEFAULT_PRODUCTS);
       showToast('Inventario restablecido.');
+    }
+  };
+
+  const clearAllProducts = () => {
+    if (window.confirm('¿Vaciar todo el catálogo? Esta acción elimina TODOS los productos y no se puede deshacer.')) {
+      setProducts([]);
+      setCart([]);
+      showToast('Catálogo vaciado. Listo para empezar desde cero.');
     }
   };
 
@@ -240,10 +256,12 @@ export const ShopProvider = ({ children }) => {
       addToCart,
       updateCartQty,
       removeFromCart,
+      clearCart,
       updateStock,
       deleteProduct,
       addProduct,
       resetDemoStock,
+      clearAllProducts,
       importProducts,
       updateConfig,
       generateWhatsAppUrl
