@@ -25,6 +25,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from './ui/dialog';
 
 export const CartDrawer = () => {
   const {
@@ -48,6 +56,7 @@ export const CartDrawer = () => {
     paymentMethod: 'Efectivo al Entregar / Recoger',
     notes: '',
   });
+  const [isClearConfirmOpen, setIsClearConfirmOpen] = useState(false);
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
@@ -74,7 +83,8 @@ export const CartDrawer = () => {
     value.toLocaleString('en-US', { minimumFractionDigits: 2 });
 
   return (
-    <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
+    <>
+      <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
       <SheetContent className="w-full gap-0 p-0 sm:max-w-md">
         <SheetHeader className="border-b pr-12">
           <div className="flex items-center gap-2">
@@ -88,7 +98,7 @@ export const CartDrawer = () => {
                 variant="ghost"
                 size="sm"
                 className="ml-auto text-muted-foreground hover:text-rose-accent"
-                onClick={clearCart}
+                onClick={() => setIsClearConfirmOpen(true)}
               >
                 <Trash2 size={14} /> Vaciar
               </Button>
@@ -271,5 +281,31 @@ export const CartDrawer = () => {
         )}
       </SheetContent>
     </Sheet>
+
+    <Dialog open={isClearConfirmOpen} onOpenChange={setIsClearConfirmOpen}>
+      <DialogContent className="max-w-xs">
+        <DialogHeader>
+          <DialogTitle>¿Vaciar el carrito?</DialogTitle>
+          <DialogDescription>
+            Se eliminarán todos los productos de tu carrito. Esta acción no se puede deshacer.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="gap-2 sm:justify-between">
+          <Button variant="secondary" onClick={() => setIsClearConfirmOpen(false)}>
+            Cancelar
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={() => {
+              clearCart();
+              setIsClearConfirmOpen(false);
+            }}
+          >
+            <Trash2 size={16} /> Vaciar Carrito
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 };

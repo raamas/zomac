@@ -10,7 +10,7 @@
   --card-foreground: #f3f4f6;
   --popover: #1e2638;
   --popover-foreground: #f3f4f6;
-  --primary: #25d366;
+  --primary: #0ea5e9;
   --primary-foreground: #0b111e;
   --secondary: #1e2638;
   --secondary-foreground: #f3f4f6;
@@ -22,9 +22,9 @@
   --destructive-foreground: #ffffff;
   --border: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.14);
-  --ring: #25d366;
+  --ring: #0ea5e9;
   --radius: 0.625rem;
-  --chart-1: #25d366;
+  --chart-1: #0ea5e9;
   --chart-2: #6366f1;
   --chart-3: #f59e0b;
   --chart-4: #3b82f6;
@@ -51,9 +51,9 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-whatsapp: #25d366;
-  --color-whatsapp-dark: #075e54;
-  --color-whatsapp-hover: #1fba59;
+  --color-whatsapp: #0ea5e9;
+  --color-whatsapp-dark: #0369a1;
+  --color-whatsapp-hover: #0284c7;
   --color-indigo-accent: #6366f1;
   --color-amber-accent: #f59e0b;
   --color-rose-accent: #f43f5e;

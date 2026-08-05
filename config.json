@@ -1,9 +1,9 @@
 {
-  "shopName": "Zomac",
-  "whatsappNumber": "573193390400",
+  "shopName": "XiMovil",
+  "whatsappNumber": "573246000009",
   "currency": "$",
   "storeEmail": "n/a",
   "storeAddress": "Centro",
-  "announcementText": "⚡ Celulares",
+  "announcementText": "Celulares al mejor precio",
   "messageTemplate": "🛒 *NUEVO PEDIDO DE CELULAR - {shopName}*\n----------------------------------\n👤 *Cliente:* {customerName}\n📱 *Teléfono:* {customerPhone}\n📦 *Tipo de Pedido:* {orderType}\n📍 *Dirección:* {deliveryAddress}\n💳 *Método de Pago:* {paymentMethod}\n----------------------------------\n\n📱 *CELULARES SOLICITADOS:*\n{itemList}\n\n----------------------------------\n💵 *MONTO TOTAL:* {currency}{totalAmount}\n----------------------------------\n📝 *Notas:* {orderNotes}\n\n¡Gracias! Quedo a la espera de la confirmación de mi pedido."
 }

@@ -126,10 +126,8 @@ export const ShopProvider = ({ children }) => {
 
   const clearCart = () => {
     if (cart.length === 0) return;
-    if (window.confirm('¿Vaciar todo el carrito?')) {
-      setCart([]);
-      showToast('Carrito vaciado.');
-    }
+    setCart([]);
+    showToast('Carrito vaciado.');
   };
 
   // Inventory / Stock Actions
