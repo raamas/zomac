@@ -22,7 +22,7 @@ export const ShopProvider = ({ children }) => {
   // Products state
   const [products, setProducts] = useState(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('wa_shop_products_v2');
+      const saved = localStorage.getItem('wa_shop_products_v3');
       if (saved) {
         try { return JSON.parse(saved); } catch (e) {}
       }
@@ -33,7 +33,7 @@ export const ShopProvider = ({ children }) => {
   // Cart state
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('wa_shop_cart_v2');
+      const saved = localStorage.getItem('wa_shop_cart_v3');
       if (saved) {
         try { return JSON.parse(saved); } catch (e) {}
       }
@@ -56,11 +56,11 @@ export const ShopProvider = ({ children }) => {
 
   // Sync state to localStorage
   useEffect(() => {
-    localStorage.setItem('wa_shop_products_v2', JSON.stringify(products));
+    localStorage.setItem('wa_shop_products_v3', JSON.stringify(products));
   }, [products]);
 
   useEffect(() => {
-    localStorage.setItem('wa_shop_cart_v2', JSON.stringify(cart));
+    localStorage.setItem('wa_shop_cart_v3', JSON.stringify(cart));
   }, [cart]);
 
   // Toast Helper
@@ -72,67 +72,27 @@ export const ShopProvider = ({ children }) => {
     }, 3000);
   };
 
-  // Cart Actions
-  const addToCart = (productId) => {
+  // Request Selection Actions
+  const setCartQty = (productId, qty) => {
     const product = products.find(p => p.id === productId);
     if (!product) return;
-
-    if (product.stock <= 0) {
-      showToast('Este producto se encuentra agotado actualmente.', true);
-      return;
-    }
-
-    const existing = cart.find(item => item.product.id === productId);
-    const currentQty = existing ? existing.quantity : 0;
-
-    if (currentQty + 1 > product.stock) {
-      showToast(`Solo quedan ${product.stock} unidades disponibles en inventario.`, true);
-      return;
-    }
-
-    if (existing) {
-      setCart(prev => prev.map(item =>
-        item.product.id === productId ? { ...item, quantity: item.quantity + 1 } : item
-      ));
-    } else {
-      setCart(prev => [...prev, { product, quantity: 1 }]);
-    }
-    showToast(`¡"${product.name}" agregado a tu lista de donación!`);
-  };
-
-  const updateCartQty = (productId, delta) => {
-    const product = products.find(p => p.id === productId);
-    const item = cart.find(i => i.product.id === productId);
-    if (!item) return;
-
-    if (delta > 0 && product && item.quantity + delta > product.stock) {
-      showToast(`Solo quedan ${product.stock} unidades disponibles en inventario.`, true);
-      return;
-    }
-
-    setCart(prev => prev.map(i => {
-      if (i.product.id === productId) {
-        const newQty = i.quantity + delta;
-        return newQty > 0 ? { ...i, quantity: newQty } : null;
-      }
-      return i;
-    }).filter(Boolean));
-  };
-
-  const removeFromCart = (productId) => {
-    setCart(prev => prev.filter(item => item.product.id !== productId));
-    showToast('Artículo eliminado de tu lista de donación');
+    const clamped = Math.max(0, Math.min(qty, product.stock));
+    setCart(prev => {
+      const exists = prev.find(i => i.product.id === productId);
+      if (clamped === 0) return prev.filter(i => i.product.id !== productId);
+      if (exists) return prev.map(i => i.product.id === productId ? { ...i, quantity: clamped } : i);
+      return [...prev, { product, quantity: clamped }];
+    });
   };
 
   const clearCart = () => {
     if (cart.length === 0) return;
     setCart([]);
-    showToast('Lista de donación vaciada.');
   };
 
   // Inventory / Stock Actions
   const updateStock = (productId, newStock) => {
-    const stockVal = Math.max(0, isNaN(newStock) ? 0 : newStock);
+    const stockVal = Math.max(1, isNaN(newStock) ? 1 : newStock);
     setProducts(prev => prev.map(p => p.id === productId ? { ...p, stock: stockVal } : p));
   };
 
@@ -151,7 +111,7 @@ export const ShopProvider = ({ children }) => {
     const newProd = {
       id: 'item-' + Date.now(),
       ...newProdData,
-      stock: parseInt(newProdData.stock, 10) || 1,
+      stock: Math.max(1, parseInt(newProdData.stock, 10) || 1),
     };
     setProducts(prev => [newProd, ...prev]);
     showToast(`¡Artículo "${newProd.name}" agregado al catálogo!`);
@@ -191,14 +151,18 @@ export const ShopProvider = ({ children }) => {
 
   // WhatsApp Link Builder
   const generateWhatsAppUrl = (customerInfo) => {
-    const { custName, custPhone, orderType, custAddress, condition, notes } = customerInfo;
+    const { custName, custPhone, custLocation, notes } = customerInfo;
 
     if (!custName) {
-      showToast('Por favor escribe tu Nombre Completo antes de enviar tu donación', true);
+      showToast('Por favor escribe tu Nombre Completo antes de enviar tu petición', true);
       return null;
     }
-    if (orderType === 'Recogen en mi Domicilio' && !custAddress) {
-      showToast('Por favor escribe tu Dirección de Recolección', true);
+    if (!custPhone) {
+      showToast('Por favor escribe tu Teléfono para que podamos contactarte', true);
+      return null;
+    }
+    if (!custLocation) {
+      showToast('Por favor escribe tu Ubicación para saber dónde enviarte ayuda', true);
       return null;
     }
 
@@ -209,10 +173,8 @@ export const ShopProvider = ({ children }) => {
     const formatted = template
       .replace(/{shopName}/g, (config.shopName || '').toUpperCase())
       .replace(/{customerName}/g, custName)
-      .replace(/{customerPhone}/g, custPhone || 'N/A')
-      .replace(/{orderType}/g, orderType)
-      .replace(/{deliveryAddress}/g, (orderType === 'Recogen en mi Domicilio' && custAddress) ? custAddress : (orderType === 'Entrego en Punto de Acopio' ? 'Entrego en Punto de Acopio' : 'N/A'))
-      .replace(/{condition}/g, condition)
+      .replace(/{customerPhone}/g, custPhone)
+      .replace(/{location}/g, custLocation)
       .replace(/{itemList}/g, itemListStr)
       .replace(/{orderNotes}/g, notes || 'Ninguna');
 
@@ -220,7 +182,7 @@ export const ShopProvider = ({ children }) => {
     setProducts(prev => prev.map(p => {
       const cartItem = cart.find(ci => ci.product.id === p.id);
       if (cartItem) {
-        return { ...p, stock: Math.max(0, p.stock - cartItem.quantity) };
+        return { ...p, stock: Math.max(1, p.stock - cartItem.quantity) };
       }
       return p;
     }));
@@ -243,9 +205,7 @@ export const ShopProvider = ({ children }) => {
       qrUrl, setQrUrl,
       toasts,
       showToast,
-      addToCart,
-      updateCartQty,
-      removeFromCart,
+      setCartQty,
       clearCart,
       updateStock,
       deleteProduct,

@@ -111,7 +111,7 @@ export const AdminPanel = () => {
           : String(r.id ?? '').trim() || 'item-' + Date.now() + '-' + idx,
         name: String(r.name ?? '').trim() || (existing ? existing.name : ''),
         category: existing ? existing.category : 'proteccion',
-        stock: isNaN(parsedStock) ? (existing ? existing.stock : 0) : Math.max(0, parsedStock),
+        stock: isNaN(parsedStock) ? (existing ? existing.stock : 1) : Math.max(1, parsedStock),
         badge: existing ? existing.badge : '',
         badgeType: existing ? existing.badgeType : '',
         description: existing ? existing.description : '',
@@ -147,7 +147,7 @@ export const AdminPanel = () => {
           <div>
             <h3 className="font-display text-lg font-bold">Panel de Control de Inventario y Stock</h3>
             <p className="text-sm text-muted-foreground">
-              Gestión de existencias y catálogo de donaciones en tiempo real
+              Gestión de existencias y catálogo de necesidades en tiempo real
             </p>
           </div>
         </div>
@@ -240,7 +240,7 @@ export const AdminPanel = () => {
                 <Input
                   id="np-stock"
                   type="number"
-                  min="0"
+                  min="1"
                   value={newProd.stock}
                   onChange={(e) => setNewProd({ ...newProd, stock: e.target.value })}
                   required
@@ -326,7 +326,7 @@ export const AdminPanel = () => {
                         type="number"
                         className="h-8 w-16 text-center"
                         value={p.stock}
-                        min="0"
+                        min="1"
                         onChange={(e) => updateStock(p.id, parseInt(e.target.value, 10))}
                       />
                       <Button

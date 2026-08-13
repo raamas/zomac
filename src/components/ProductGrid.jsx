@@ -1,29 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Plus, XCircle, SearchX, CheckCircle2, AlertTriangle, Ban, Gift } from 'lucide-react';
+import { SearchX, CheckCircle2, AlertTriangle, Ban, Plus } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
-import { Button } from './ui/button';
 import { Card } from './ui/card';
-import { Badge } from './ui/badge';
-
-const categoryLabel = (c) =>
-  ({
-    proteccion: 'Protección',
-    'primeros-auxilios': 'Primeros Auxilios',
-    agua: 'Agua',
-    alimentos: 'Alimentos',
-    iluminacion: 'Iluminación',
-    comunicacion: 'Comunicación',
-    herramientas: 'Herramientas',
-    servicios: 'Servicios',
-  }[c] || 'General');
-
-const badgeVariant = (type) =>
-  type === 'sale' ? 'destructive' : type === 'new' ? 'secondary' : 'default';
+import { Button } from './ui/button';
 
 export const ProductGrid = () => {
-  const { products, activeCategory, searchQuery, sortBy, addToCart } = useShop();
+  const { products, activeCategory, searchQuery, sortBy, cart, setCartQty } = useShop();
 
   let filtered = products.filter((p) => {
     const matchesCat = activeCategory === 'all' || p.category === activeCategory;
@@ -54,16 +38,10 @@ export const ProductGrid = () => {
       {filtered.map((p) => {
         const isOutOfStock = p.stock <= 0;
         const isLowStock = p.stock > 0 && p.stock < 3;
+        const qtyInCart = cart.find((i) => i.product.id === p.id)?.quantity || 0;
 
         return (
           <Card key={p.id} className="gap-3 p-5 transition-colors hover:border-foreground/20">
-            <div className="flex items-start justify-between gap-2">
-              <Badge variant="secondary" className="text-muted-foreground">
-                {categoryLabel(p.category)}
-              </Badge>
-              {p.badge && <Badge variant={badgeVariant(p.badgeType)}>{p.badge}</Badge>}
-            </div>
-
             <div className="space-y-1">
               <h3 className="font-display text-lg font-semibold leading-tight">{p.name}</h3>
               <p className="text-sm text-muted-foreground">{p.description}</p>
@@ -85,20 +63,19 @@ export const ProductGrid = () => {
               )}
             </div>
 
-            <div className="mt-auto flex items-center justify-between border-t pt-4">
-              <span className="inline-flex items-center gap-1 text-sm font-semibold text-whatsapp">
-                <Gift size={14} /> Donación
-              </span>
-              <Button
-                size="sm"
-                variant={isOutOfStock ? 'secondary' : 'default'}
-                onClick={() => addToCart(p.id)}
-                disabled={isOutOfStock}
-              >
-                {isOutOfStock ? <XCircle size={16} /> : <Plus size={16} />}
-                {isOutOfStock ? 'Agotado' : 'Ofrecer'}
-              </Button>
-            </div>
+            <Button
+              className="mt-auto w-full"
+              variant={qtyInCart > 0 ? 'secondary' : 'outline'}
+              onClick={() => setCartQty(p.id, qtyInCart + 1)}
+              disabled={isOutOfStock}
+            >
+              <Plus size={16} />
+              {isOutOfStock
+                ? 'Agotado'
+                : qtyInCart > 0
+                  ? `Agregar (${qtyInCart} en petición)`
+                  : 'Agregar'}
+            </Button>
           </Card>
         );
       })}

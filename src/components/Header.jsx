@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { LifeBuoy, Search, ShoppingCart, Megaphone } from 'lucide-react';
+import { LifeBuoy, Search, HeartHandshake, Megaphone } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -11,7 +11,7 @@ export const Header = () => {
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
-    document.title = `${config.shopName} - Campaña de Donación`;
+    document.title = `${config.shopName} - Solicitud de Ayuda`;
   }, [config.shopName]);
 
   return (
@@ -31,7 +31,7 @@ export const Header = () => {
               <h1 className="font-display text-xl font-bold leading-tight">{config.shopName}</h1>
               <span className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-accent">
                 <span className="pulse-dot size-1.5 rounded-full bg-amber-accent shadow-[0_0_8px_#f59e0b]" />
-                Campaña de Donación
+                Solicitud de Ayuda
               </span>
             </div>
           </div>
@@ -40,7 +40,7 @@ export const Header = () => {
             <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Busca qué donar: artículos y servicios..."
+              placeholder="Busca qué necesitas: artículos y servicios..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="rounded-full pl-10"
@@ -51,8 +51,8 @@ export const Header = () => {
             onClick={() => setIsCartOpen(true)}
             className="rounded-full bg-gradient-to-br from-whatsapp to-whatsapp-hover font-semibold text-white shadow-[0_4px_15px_rgba(14,165,233,0.35)] hover:opacity-90"
           >
-            <ShoppingCart size={18} />
-            <span className="hidden sm:inline">Mi Donación</span>
+            <HeartHandshake size={18} />
+            <span className="hidden sm:inline">Pedir</span>
             <span className="rounded-full bg-white px-2 py-0.5 text-xs font-extrabold text-[#0b111e]">
               {totalCartCount}
             </span>

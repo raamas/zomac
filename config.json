@@ -1,8 +1,9 @@
 {
   "shopName": "XiMovil",
-  "whatsappNumber": "573246000009",
+  "whatsappNumber": "573168150498",
   "storeEmail": "n/a",
   "storeAddress": "Centro",
-  "announcementText": "🚨 Tras el sismo, únete a la campaña de donación: ofrece artículos y servicios, y nosotros coordinamos la recolección.",
-  "messageTemplate": "🚨 *OFERTA DE DONACIÓN POST-SISMO - {shopName}*\n----------------------------------\n👤 *Donante:* {customerName}\n📱 *Teléfono:* {customerPhone}\n🚚 *Forma de Entrega:* {orderType}\n📍 *Dirección de Recolección:* {deliveryAddress}\n📦 *Condición de los Artículos:* {condition}\n----------------------------------\n\n📦 *ARTÍCULOS Y SERVICIOS QUE DONO:*\n{itemList}\n\n----------------------------------\n🙏 *¡GRACIAS POR TU DONACIÓN!*\n----------------------------------\n📝 *Notas:* {orderNotes}"
+  "fulfillingOrganization": "Fundacion AquiCabemosTodos",
+  "announcementText": "🚨 ¿Necesitas ayuda? Cuéntanos qué necesitas en este momento y nuestro equipo te contactará para apoyarte.",
+  "messageTemplate": "🛟 *SOLICITUD DE AYUDA - {shopName}*\n----------------------------------\n👤 *Nombre:* {customerName}\n📱 *Teléfono:* {customerPhone}\n📍 *Ubicación:* {location}\n----------------------------------\n\n📦 *LO QUE NECESITO:*\n{itemList}\n\n----------------------------------\n🤝 *¡Espero su apoyo!*\n----------------------------------\n📝 *Notas:* {orderNotes}"
 }

@@ -22,16 +22,16 @@ export const QrModal = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <QrCode size={20} className="text-whatsapp" /> Escanea para Enviar tu Donación
+            <QrCode size={20} className="text-whatsapp" /> Escanea para Enviar tu Petición
           </DialogTitle>
           <DialogDescription>
-            Escanea este código QR con la cámara de tu celular para abrir WhatsApp con tu donación desglosada.
+            Escanea este código QR con la cámara de tu celular para abrir WhatsApp con tu petición desglosada.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center gap-4">
           <img
             src={qrApiUrl}
-            alt="Código QR Donación WhatsApp"
+            alt="Código QR Petición de Ayuda WhatsApp"
             className="rounded-lg bg-white p-2"
           />
           <Button asChild className="w-full">

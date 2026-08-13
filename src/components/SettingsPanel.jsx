@@ -26,15 +26,15 @@ export const SettingsPanel = () => {
       <div className="flex items-center gap-3 px-6">
         <Settings size={20} className="text-whatsapp" />
         <div>
-          <h3 className="font-display text-lg font-bold">Configuración de la Tienda</h3>
+          <h3 className="font-display text-lg font-bold">Configuración de la Campaña</h3>
           <p className="text-sm text-muted-foreground">
-            Personaliza los datos de la campaña de donación.
+            Personaliza los datos de la campaña de ayuda.
           </p>
         </div>
       </div>
       <form onSubmit={handleSubmit} className="grid max-w-lg gap-4 px-6">
         <div className="space-y-2">
-          <Label htmlFor="shopName">Nombre de la Tienda</Label>
+          <Label htmlFor="shopName">Nombre de la Campaña</Label>
           <Input
             type="text"
             id="shopName"
