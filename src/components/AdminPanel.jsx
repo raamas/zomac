@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import * as XLSX from 'xlsx';
 import {
   Boxes,
   PlusCircle,
@@ -77,13 +78,18 @@ export const AdminPanel = () => {
   };
 
   const handleExportExcel = async () => {
-    const XLSX = await import('xlsx');
-    const rows = products.map((p) => ({ id: p.id, name: p.name, stock: p.stock }));
+    const rows = products.map((p) => ({
+      id: p.id,
+      name: p.name,
+      category: p.category,
+      description: p.description,
+      stock: p.stock,
+    }));
     const ws = XLSX.utils.json_to_sheet(rows);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Inventario');
     XLSX.writeFile(wb, 'inventario.xlsx');
-    showToast('Archivo Excel descargado (id, nombre y stock).');
+    showToast('Archivo Excel descargado (id, nombre, categoría, descripción y stock).');
   };
 
   const handleImportExcel = async (e) => {
@@ -91,45 +97,79 @@ export const AdminPanel = () => {
     e.target.value = '';
     if (!file) return;
 
-    const XLSX = await import('xlsx');
-    const data = await file.arrayBuffer();
-    const wb = XLSX.read(data, { type: 'array' });
-    const sheet = wb.Sheets[wb.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+    try {
+      const data = await file.arrayBuffer();
+      const wb = XLSX.read(data, { type: 'array' });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      if (!sheet) {
+        showToast('El archivo no contiene hojas de cálculo.', true);
+        return;
+      }
 
-    if (!rows.length) {
-      showToast('El archivo no contiene datos válidos.', true);
-      return;
+      const rowsArr = XLSX.utils.sheet_to_json(sheet, { defval: '', header: 1 });
+      const headerMap = {};
+      (rowsArr[0] || []).forEach((h, i) => {
+        const key = String(h ?? '').trim().toLowerCase();
+        if (key === 'id' || key === 'codigo') headerMap.id = i;
+        else if (key === 'name' || key === 'nombre' || key === 'producto' || key === 'articulo') headerMap.name = i;
+        else if (key === 'category' || key === 'categoria') headerMap.category = i;
+        else if (key === 'description' || key === 'descripcion') headerMap.description = i;
+        else if (key === 'stock' || key === 'cantidad' || key === 'unidades') headerMap.stock = i;
+      });
+
+      if (headerMap.name === undefined) {
+        showToast('No se encontró la columna "Nombre" en el archivo.', true);
+        return;
+      }
+
+      const raw = rowsArr.slice(1);
+      if (!raw.length) {
+        showToast('El archivo no contiene datos válidos.', true);
+        return;
+      }
+
+      const get = (row) => (key) => String(row[headerMap[key]] ?? '').trim();
+
+      const normalized = raw
+        .map((row, idx) => {
+          const g = get(row);
+          const name = g('name');
+          if (!name) return null;
+          const existing = products.find((p) => p.id === g('id') || p.name === name);
+          const parsedStock = parseInt(g('stock'), 10);
+          return {
+            id: g('id') || (existing ? existing.id : 'item-' + Date.now() + '-' + idx),
+            name,
+            category: g('category') || (existing ? existing.category : 'proteccion'),
+            description: g('description') || (existing ? existing.description : ''),
+            stock: isNaN(parsedStock) ? (existing ? existing.stock : 1) : Math.max(1, parsedStock),
+            badge: existing ? existing.badge : '',
+            badgeType: existing ? existing.badgeType : '',
+          };
+        })
+        .filter(Boolean);
+
+      if (!normalized.length) {
+        showToast('El archivo no contiene datos válidos.', true);
+        return;
+      }
+
+      const seen = new Set();
+      const result = [];
+      for (const row of normalized) {
+        if (seen.has(row.id)) continue;
+        seen.add(row.id);
+        result.push(row);
+      }
+      for (const p of products) {
+        if (!seen.has(p.id)) result.push(p);
+      }
+
+      importProducts(result);
+    } catch (err) {
+      console.error(err);
+      showToast('No se pudo leer el archivo. Usa el formato exportado (id, nombre, categoría, descripción, stock).', true);
     }
-
-    const normalized = rows.map((r, idx) => {
-      const existing = products.find((p) => p.id === r.id || p.name === r.name);
-      const parsedStock = parseInt(r.stock, 10);
-      return {
-        id: existing
-          ? existing.id
-          : String(r.id ?? '').trim() || 'item-' + Date.now() + '-' + idx,
-        name: String(r.name ?? '').trim() || (existing ? existing.name : ''),
-        category: existing ? existing.category : 'proteccion',
-        stock: isNaN(parsedStock) ? (existing ? existing.stock : 1) : Math.max(1, parsedStock),
-        badge: existing ? existing.badge : '',
-        badgeType: existing ? existing.badgeType : '',
-        description: existing ? existing.description : '',
-      };
-    }).filter((p) => p.name);
-
-    const seen = new Set();
-    const result = [];
-    for (const row of normalized) {
-      if (seen.has(row.id)) continue;
-      seen.add(row.id);
-      result.push(row);
-    }
-    for (const p of products) {
-      if (!seen.has(p.id)) result.push(p);
-    }
-
-    importProducts(result);
   };
 
   const stats = [
