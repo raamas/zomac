@@ -36,7 +36,6 @@ import {
 export const AdminPanel = () => {
   const {
     products,
-    config,
     updateStock,
     deleteProduct,
     addProduct,
@@ -50,8 +49,7 @@ export const AdminPanel = () => {
   const fileInputRef = useRef(null);
   const [newProd, setNewProd] = useState({
     name: '',
-    category: 'flagship',
-    price: '',
+    category: 'proteccion',
     stock: 10,
     badge: '',
     description: '',
@@ -64,14 +62,13 @@ export const AdminPanel = () => {
 
   const handleAddSubmit = (e) => {
     e.preventDefault();
-    if (!newProd.name || !newProd.price || !newProd.description) return;
+    if (!newProd.name || !newProd.description) return;
 
     addProduct(newProd);
 
     setNewProd({
       name: '',
-      category: 'flagship',
-      price: '',
+      category: 'proteccion',
       stock: 10,
       badge: '',
       description: '',
@@ -111,10 +108,9 @@ export const AdminPanel = () => {
       return {
         id: existing
           ? existing.id
-          : String(r.id ?? '').trim() || 'phone-' + Date.now() + '-' + idx,
+          : String(r.id ?? '').trim() || 'item-' + Date.now() + '-' + idx,
         name: String(r.name ?? '').trim() || (existing ? existing.name : ''),
-        category: existing ? existing.category : 'flagship',
-        price: existing ? existing.price : 0,
+        category: existing ? existing.category : 'proteccion',
         stock: isNaN(parsedStock) ? (existing ? existing.stock : 0) : Math.max(0, parsedStock),
         badge: existing ? existing.badge : '',
         badgeType: existing ? existing.badgeType : '',
@@ -169,7 +165,7 @@ export const AdminPanel = () => {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
           <Button onClick={() => setShowAddForm(true)}>
-            <PlusCircle size={18} /> Agregar Nuevo Celular
+            <PlusCircle size={18} /> Agregar Nuevo Artículo
           </Button>
           <Button variant="secondary" onClick={resetDemoStock}>
             <RotateCcw size={18} /> Restablecer Stock Demo
@@ -200,16 +196,16 @@ export const AdminPanel = () => {
       {showAddForm && (
         <Card>
           <h4 className="flex items-center gap-2 px-6 font-semibold">
-            <Plus size={18} className="text-whatsapp" /> Nuevo Smartphone al Catálogo
+            <Plus size={18} className="text-whatsapp" /> Nuevo Artículo al Catálogo
           </h4>
           <form onSubmit={handleAddSubmit} className="grid gap-4 px-6">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="np-name">Nombre del Teléfono *</Label>
+                <Label htmlFor="np-name">Nombre del Artículo *</Label>
                 <Input
                   id="np-name"
                   type="text"
-                  placeholder="Ej. Xiaomi Redmi Note 13 Pro"
+                  placeholder="Ej. Casco de Seguridad"
                   value={newProd.name}
                   onChange={(e) => setNewProd({ ...newProd, name: e.target.value })}
                   required
@@ -225,27 +221,19 @@ export const AdminPanel = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="flagship">Gama Alta / Flagship</SelectItem>
-                    <SelectItem value="midrange">Calidad - Precio</SelectItem>
-                    <SelectItem value="gaming">Gaming & Potencia</SelectItem>
+                    <SelectItem value="proteccion">Protección</SelectItem>
+                    <SelectItem value="primeros-auxilios">Primeros Auxilios</SelectItem>
+                    <SelectItem value="agua">Agua</SelectItem>
+                    <SelectItem value="alimentos">Alimentos</SelectItem>
+                    <SelectItem value="iluminacion">Iluminación</SelectItem>
+                    <SelectItem value="comunicacion">Comunicación</SelectItem>
+                    <SelectItem value="herramientas">Herramientas</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-3">
-              <div className="space-y-2">
-                <Label htmlFor="np-price">Precio *</Label>
-                <Input
-                  id="np-price"
-                  type="number"
-                  step="0.01"
-                  placeholder="299.99"
-                  value={newProd.price}
-                  onChange={(e) => setNewProd({ ...newProd, price: e.target.value })}
-                  required
-                />
-              </div>
+            <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="np-stock">Stock Inicial (Unidades) *</Label>
                 <Input
@@ -274,7 +262,7 @@ export const AdminPanel = () => {
               <Input
                 id="np-desc"
                 type="text"
-                placeholder="Especificaciones principales (RAM, Almacenamiento, Cámara)"
+                placeholder="Ej. Talla, material, capacidad o caducidad"
                 value={newProd.description}
                 onChange={(e) => setNewProd({ ...newProd, description: e.target.value })}
                 required
@@ -302,7 +290,6 @@ export const AdminPanel = () => {
             <TableRow>
               <TableHead>Producto</TableHead>
               <TableHead>Categoría</TableHead>
-              <TableHead>Precio</TableHead>
               <TableHead>Unidades en Stock</TableHead>
               <TableHead>Estado</TableHead>
               <TableHead className="text-right">Acciones</TableHead>
@@ -323,12 +310,6 @@ export const AdminPanel = () => {
                   </TableCell>
                   <TableCell>
                     <Badge variant="secondary">{p.category}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <strong>
-                      {config.currency}
-                      {p.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                    </strong>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1.5">

@@ -59,17 +59,6 @@ export const SettingsPanel = () => {
           </p>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="currency">Símbolo de Moneda</Label>
-          <Input
-            type="text"
-            id="currency"
-            value={form.currency || ''}
-            onChange={(e) => setForm({ ...form, currency: e.target.value })}
-            placeholder="$"
-          />
-        </div>
-
         <div className="pb-2">
           <Button type="submit">Guardar Cambios</Button>
         </div>

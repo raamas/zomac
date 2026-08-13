@@ -17,10 +17,13 @@ export const CategoryFilter = () => {
 
   const categories = [
     { id: 'all', label: 'Todos' },
-    { id: 'flagship', label: 'Gama Alta' },
-    { id: 'midrange', label: 'Calidad-Precio' },
-    { id: 'gaming', label: 'Gaming' },
-    { id: 'ofertas', label: 'Ofertas' },
+    { id: 'proteccion', label: 'Protección' },
+    { id: 'primeros-auxilios', label: 'Primeros Auxilios' },
+    { id: 'agua', label: 'Agua' },
+    { id: 'alimentos', label: 'Alimentos' },
+    { id: 'iluminacion', label: 'Iluminación' },
+    { id: 'comunicacion', label: 'Comunicación' },
+    { id: 'herramientas', label: 'Herramientas' },
   ];
 
   return (
@@ -50,8 +53,6 @@ export const CategoryFilter = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="featured">Destacados</SelectItem>
-            <SelectItem value="price-low">Precio: Menor a Mayor</SelectItem>
-            <SelectItem value="price-high">Precio: Mayor a Menor</SelectItem>
             <SelectItem value="name">Nombre (A-Z)</SelectItem>
           </SelectContent>
         </Select>

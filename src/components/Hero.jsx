@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { MessageSquare, Zap, Truck } from 'lucide-react';
+import { MessageSquare, Zap, Truck, HeartHandshake } from 'lucide-react';
 import { Badge } from './ui/badge';
 
 export const Hero = () => {
@@ -9,15 +9,15 @@ export const Hero = () => {
     <section className="px-4 py-9">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-8 rounded-2xl border bg-card p-8 shadow-md md:flex-row md:px-10">
         <div className="max-w-xl">
-          <Badge className="mb-3 border-whatsapp/20 bg-whatsapp/10 px-3 py-1 text-whatsapp">
-            <MessageSquare size={14} /> Compras por WhatsApp
+          <Badge className="mb-3 border-amber-accent/30 bg-amber-accent/10 px-3 py-1 text-amber-accent">
+            <MessageSquare size={14} /> Apoyo tras el sismo
           </Badge>
           <h2 className="font-display text-3xl font-extrabold leading-tight text-foreground">
-            Tu Próximo Smartphone a un Clic por WhatsApp
+            Tras el sismo, equípate con lo esencial a un clic por WhatsApp
           </h2>
           <p className="mt-2 text-muted-foreground">
-            Elige tu smartphone preferido, agrégalo al carrito y envía tu pedido detallado
-            directamente por WhatsApp en segundos.
+            Ahora necesitas protección, alimentos no perecederos, agua y primeros auxilios.
+            Envía tu pedido por WhatsApp y lo entregamos con prioridad.
           </p>
         </div>
 
@@ -32,8 +32,15 @@ export const Hero = () => {
           <div className="flex items-center gap-3 rounded-xl border bg-background px-4 py-3">
             <Truck className="shrink-0 text-whatsapp" size={24} />
             <div>
-              <strong className="block text-sm">Envío Seguro</strong>
-              <span className="text-sm text-muted-foreground">Entrega a domicilio</span>
+              <strong className="block text-sm">Envío Prioritario</strong>
+              <span className="text-sm text-muted-foreground">Entrega rápida a domicilio</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 rounded-xl border bg-background px-4 py-3">
+            <HeartHandshake className="shrink-0 text-amber-accent" size={24} />
+            <div>
+              <strong className="block text-sm">Precios Justos</strong>
+              <span className="text-sm text-muted-foreground">Sin recargos en emergencia</span>
             </div>
           </div>
         </div>

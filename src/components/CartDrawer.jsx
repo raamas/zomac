@@ -10,6 +10,7 @@ import {
   QrCode,
   Minus,
   Plus,
+  Gift,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
@@ -39,7 +40,6 @@ export const CartDrawer = () => {
     isCartOpen,
     setIsCartOpen,
     cart,
-    config,
     updateCartQty,
     removeFromCart,
     clearCart,
@@ -59,7 +59,6 @@ export const CartDrawer = () => {
   const [isClearConfirmOpen, setIsClearConfirmOpen] = useState(false);
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -68,7 +67,10 @@ export const CartDrawer = () => {
 
   const handleCheckout = () => {
     const url = generateWhatsAppUrl(form);
-    if (url) window.open(url, '_blank');
+    if (url) {
+      window.open(url, '_blank');
+      clearCart();
+    }
   };
 
   const handleShowQr = () => {
@@ -78,9 +80,6 @@ export const CartDrawer = () => {
       setIsQrOpen(true);
     }
   };
-
-  const money = (value) =>
-    value.toLocaleString('en-US', { minimumFractionDigits: 2 });
 
   return (
     <>
@@ -114,7 +113,7 @@ export const CartDrawer = () => {
               </div>
               <h4 className="font-display font-semibold">Tu carrito está vacío</h4>
               <p className="text-sm text-muted-foreground">
-                Explora el catálogo y elige los mejores smartphones.
+                Explora el catálogo y elige los artículos de emergencia que necesitas.
               </p>
               <Button variant="secondary" className="mt-2" onClick={() => setIsCartOpen(false)}>
                 Ver Catálogo
@@ -127,10 +126,6 @@ export const CartDrawer = () => {
                   <div key={item.product.id} className="flex items-center gap-3 rounded-lg border bg-background p-3">
                     <div className="min-w-0 flex-1">
                       <div className="truncate text-sm font-medium">{item.product.name}</div>
-                      <div className="text-sm font-semibold text-whatsapp">
-                        {config.currency}
-                        {money(item.product.price * item.quantity)}
-                      </div>
                       <div className="mt-2 flex items-center gap-2">
                         <Button
                           variant="outline"
@@ -253,23 +248,8 @@ export const CartDrawer = () => {
 
         {cart.length > 0 && (
           <div className="border-t bg-background p-4">
-            <div className="flex justify-between text-sm">
-              <span>Subtotal</span>
-              <strong>
-                {config.currency}
-                {money(subtotal)}
-              </strong>
-            </div>
-            <div className="flex justify-between text-sm text-muted-foreground">
-              <span>Costo de Envío</span>
-              <span>Calculado por WhatsApp</span>
-            </div>
-            <div className="flex justify-between text-base font-bold">
-              <span>Total Estimado</span>
-              <span>
-                {config.currency}
-                {money(subtotal)}
-              </span>
+            <div className="flex items-center gap-2 rounded-lg border border-whatsapp/20 bg-whatsapp/10 px-3 py-2 text-sm font-medium text-whatsapp">
+              <Gift size={16} /> Todos los artículos son donados — sin costo
             </div>
             <Button className="mt-3 w-full" size="lg" onClick={handleCheckout}>
               <MessageCircle size={20} /> Enviar Pedido por WhatsApp

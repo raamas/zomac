@@ -22,7 +22,7 @@ export const ShopProvider = ({ children }) => {
   // Products state
   const [products, setProducts] = useState(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('wa_shop_products');
+      const saved = localStorage.getItem('wa_shop_products_v2');
       if (saved) {
         try { return JSON.parse(saved); } catch (e) {}
       }
@@ -33,7 +33,7 @@ export const ShopProvider = ({ children }) => {
   // Cart state
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('wa_shop_cart');
+      const saved = localStorage.getItem('wa_shop_cart_v2');
       if (saved) {
         try { return JSON.parse(saved); } catch (e) {}
       }
@@ -56,11 +56,11 @@ export const ShopProvider = ({ children }) => {
 
   // Sync state to localStorage
   useEffect(() => {
-    localStorage.setItem('wa_shop_products', JSON.stringify(products));
+    localStorage.setItem('wa_shop_products_v2', JSON.stringify(products));
   }, [products]);
 
   useEffect(() => {
-    localStorage.setItem('wa_shop_cart', JSON.stringify(cart));
+    localStorage.setItem('wa_shop_cart_v2', JSON.stringify(cart));
   }, [cart]);
 
   // Toast Helper
@@ -149,13 +149,12 @@ export const ShopProvider = ({ children }) => {
 
   const addProduct = (newProdData) => {
     const newProd = {
-      id: 'phone-' + Date.now(),
+      id: 'item-' + Date.now(),
       ...newProdData,
       stock: parseInt(newProdData.stock, 10) || 1,
-      price: parseFloat(newProdData.price) || 0
     };
     setProducts(prev => [newProd, ...prev]);
-    showToast(`¡Celular "${newProd.name}" agregado al catálogo!`);
+    showToast(`¡Artículo "${newProd.name}" agregado al catálogo!`);
   };
 
   const resetDemoStock = () => {
@@ -185,8 +184,7 @@ export const ShopProvider = ({ children }) => {
     setConfig(updated);
     localStorage.setItem('wa_shop_config', JSON.stringify({
       shopName: updated.shopName,
-      whatsappNumber: updated.whatsappNumber,
-      currency: updated.currency
+      whatsappNumber: updated.whatsappNumber
     }));
     showToast('¡Configuración guardada!');
   };
@@ -204,11 +202,7 @@ export const ShopProvider = ({ children }) => {
       return null;
     }
 
-    const subtotal = cart.reduce((sum, i) => sum + (i.product.price * i.quantity), 0);
-    const itemListStr = cart.map(item => {
-      const itemTotal = (item.product.price * item.quantity).toLocaleString('en-US', { minimumFractionDigits: 2 });
-      return `• ${item.quantity}x ${item.product.name} — ${config.currency}${itemTotal}`;
-    }).join('\n');
+    const itemListStr = cart.map(item => `• ${item.quantity}x ${item.product.name}`).join('\n');
 
     const template = config.messageTemplate || DEFAULT_CONFIG.messageTemplate;
 
@@ -220,8 +214,6 @@ export const ShopProvider = ({ children }) => {
       .replace(/{deliveryAddress}/g, (orderType === 'Envío a Domicilio' && custAddress) ? custAddress : (orderType === 'Recoger en Tienda' ? 'Recoger en Sucursal' : 'N/A'))
       .replace(/{paymentMethod}/g, paymentMethod)
       .replace(/{itemList}/g, itemListStr)
-      .replace(/{currency}/g, config.currency || '$')
-      .replace(/{totalAmount}/g, subtotal.toLocaleString('en-US', { minimumFractionDigits: 2 }))
       .replace(/{orderNotes}/g, notes || 'Ninguna');
 
     // Deduct stock

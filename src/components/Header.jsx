@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { Smartphone, Search, ShoppingCart } from 'lucide-react';
+import { LifeBuoy, Search, ShoppingCart, Megaphone } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -11,26 +11,27 @@ export const Header = () => {
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
-    document.title = `${config.shopName} - Tienda de Celulares WhatsApp`;
+    document.title = `${config.shopName} - Tienda de Emergencia WhatsApp`;
   }, [config.shopName]);
 
   return (
     <>
-      <div className="bg-gradient-to-r from-whatsapp-dark via-whatsapp to-whatsapp-hover px-4 py-1.5 text-center text-xs font-semibold tracking-wide text-white">
-        {config.announcementText}
+      <div className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-accent to-[#fbbf24] px-4 py-1.5 text-center text-xs font-bold tracking-wide text-[#1a1203]">
+        <Megaphone size={14} className="shrink-0" />
+        <span>{config.announcementText}</span>
       </div>
 
       <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-5 px-4 py-3.5">
           <div className="flex items-center gap-3">
             <div className="flex size-11 items-center justify-center rounded-xl bg-gradient-to-br from-whatsapp to-whatsapp-dark text-white shadow-[0_0_15px_rgba(14,165,233,0.3)]">
-              <Smartphone size={24} />
+              <LifeBuoy size={24} />
             </div>
             <div>
               <h1 className="font-display text-xl font-bold leading-tight">{config.shopName}</h1>
-              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-whatsapp">
-                <span className="pulse-dot size-1.5 rounded-full bg-whatsapp shadow-[0_0_8px_#0ea5e9]" />
-                Tienda En Línea
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-accent">
+                <span className="pulse-dot size-1.5 rounded-full bg-amber-accent shadow-[0_0_8px_#f59e0b]" />
+                Apoyo tras el sismo
               </span>
             </div>
           </div>
@@ -39,7 +40,7 @@ export const Header = () => {
             <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Buscar teléfonos, marcas..."
+              placeholder="Buscar artículos de emergencia..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="rounded-full pl-10"

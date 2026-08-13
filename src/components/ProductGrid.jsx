@@ -1,20 +1,28 @@
 'use client';
 
 import React from 'react';
-import { Plus, XCircle, SearchX, CheckCircle2, AlertTriangle, Ban } from 'lucide-react';
+import { Plus, XCircle, SearchX, CheckCircle2, AlertTriangle, Ban, Gift } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 
 const categoryLabel = (c) =>
-  c === 'flagship' ? 'Gama Alta' : c === 'gaming' ? 'Gaming' : c === 'ofertas' ? 'Ofertas' : 'Gama Media';
+  ({
+    proteccion: 'Protección',
+    'primeros-auxilios': 'Primeros Auxilios',
+    agua: 'Agua',
+    alimentos: 'Alimentos',
+    iluminacion: 'Iluminación',
+    comunicacion: 'Comunicación',
+    herramientas: 'Herramientas',
+  }[c] || 'General');
 
 const badgeVariant = (type) =>
   type === 'sale' ? 'destructive' : type === 'new' ? 'secondary' : 'default';
 
 export const ProductGrid = () => {
-  const { products, activeCategory, searchQuery, sortBy, config, addToCart } = useShop();
+  const { products, activeCategory, searchQuery, sortBy, addToCart } = useShop();
 
   let filtered = products.filter((p) => {
     const matchesCat = activeCategory === 'all' || p.category === activeCategory;
@@ -24,9 +32,7 @@ export const ProductGrid = () => {
     return matchesCat && matchesSearch;
   });
 
-  if (sortBy === 'price-low') filtered.sort((a, b) => a.price - b.price);
-  else if (sortBy === 'price-high') filtered.sort((a, b) => b.price - a.price);
-  else if (sortBy === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name));
+  if (sortBy === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name));
 
   if (filtered.length === 0) {
     return (
@@ -34,7 +40,7 @@ export const ProductGrid = () => {
         <div className="flex size-14 items-center justify-center rounded-full bg-muted">
           <SearchX size={28} className="text-muted-foreground" />
         </div>
-        <h4 className="font-display text-lg font-semibold">No se encontraron teléfonos</h4>
+        <h4 className="font-display text-lg font-semibold">No se encontraron artículos</h4>
         <p className="text-sm text-muted-foreground">
           Intenta buscar con otra palabra clave o cambia el filtro de categoría.
         </p>
@@ -79,9 +85,8 @@ export const ProductGrid = () => {
             </div>
 
             <div className="mt-auto flex items-center justify-between border-t pt-4">
-              <span className="text-lg font-bold">
-                {config.currency}
-                {p.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+              <span className="inline-flex items-center gap-1 text-sm font-semibold text-whatsapp">
+                <Gift size={14} /> Donación
               </span>
               <Button
                 size="sm"
