@@ -24,6 +24,7 @@ export const CategoryFilter = () => {
     { id: 'iluminacion', label: 'Iluminación' },
     { id: 'comunicacion', label: 'Comunicación' },
     { id: 'herramientas', label: 'Herramientas' },
+    { id: 'servicios', label: 'Servicios' },
   ];
 
   return (

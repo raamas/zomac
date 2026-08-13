@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-body', display: 'swa
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-heading', display: 'swap' });
 
 export const metadata = {
-  title: `${CONFIG.shopName} - Tienda de Emergencia`,
-  description: 'Tras el sismo: protección, alimentos no perecederos, agua y primeros auxilios. Pide por WhatsApp.'
+  title: `${CONFIG.shopName} - Campaña de Donación`,
+  description: 'Tras el sismo, dona artículos y servicios de apoyo: protección, alimentos no perecederos, agua, primeros auxilios y más. Ofrécelos por WhatsApp.'
 };
 
 export default function RootLayout({ children }) {

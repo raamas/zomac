@@ -28,7 +28,7 @@ export const SettingsPanel = () => {
         <div>
           <h3 className="font-display text-lg font-bold">Configuración de la Tienda</h3>
           <p className="text-sm text-muted-foreground">
-            Personaliza estos datos para realizar la demostración a tu cliente.
+            Personaliza los datos de la campaña de donación.
           </p>
         </div>
       </div>

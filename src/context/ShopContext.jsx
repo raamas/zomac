@@ -97,7 +97,7 @@ export const ShopProvider = ({ children }) => {
     } else {
       setCart(prev => [...prev, { product, quantity: 1 }]);
     }
-    showToast(`¡"${product.name}" agregado al carrito!`);
+    showToast(`¡"${product.name}" agregado a tu lista de donación!`);
   };
 
   const updateCartQty = (productId, delta) => {
@@ -121,13 +121,13 @@ export const ShopProvider = ({ children }) => {
 
   const removeFromCart = (productId) => {
     setCart(prev => prev.filter(item => item.product.id !== productId));
-    showToast('Producto eliminado del carrito');
+    showToast('Artículo eliminado de tu lista de donación');
   };
 
   const clearCart = () => {
     if (cart.length === 0) return;
     setCart([]);
-    showToast('Carrito vaciado.');
+    showToast('Lista de donación vaciada.');
   };
 
   // Inventory / Stock Actions
@@ -191,14 +191,14 @@ export const ShopProvider = ({ children }) => {
 
   // WhatsApp Link Builder
   const generateWhatsAppUrl = (customerInfo) => {
-    const { custName, custPhone, orderType, custAddress, paymentMethod, notes } = customerInfo;
+    const { custName, custPhone, orderType, custAddress, condition, notes } = customerInfo;
 
     if (!custName) {
-      showToast('Por favor escribe tu Nombre Completo antes de ordenar', true);
+      showToast('Por favor escribe tu Nombre Completo antes de enviar tu donación', true);
       return null;
     }
-    if (orderType === 'Envío a Domicilio' && !custAddress) {
-      showToast('Por favor escribe tu Dirección de Entrega', true);
+    if (orderType === 'Recogen en mi Domicilio' && !custAddress) {
+      showToast('Por favor escribe tu Dirección de Recolección', true);
       return null;
     }
 
@@ -211,8 +211,8 @@ export const ShopProvider = ({ children }) => {
       .replace(/{customerName}/g, custName)
       .replace(/{customerPhone}/g, custPhone || 'N/A')
       .replace(/{orderType}/g, orderType)
-      .replace(/{deliveryAddress}/g, (orderType === 'Envío a Domicilio' && custAddress) ? custAddress : (orderType === 'Recoger en Tienda' ? 'Recoger en Sucursal' : 'N/A'))
-      .replace(/{paymentMethod}/g, paymentMethod)
+      .replace(/{deliveryAddress}/g, (orderType === 'Recogen en mi Domicilio' && custAddress) ? custAddress : (orderType === 'Entrego en Punto de Acopio' ? 'Entrego en Punto de Acopio' : 'N/A'))
+      .replace(/{condition}/g, condition)
       .replace(/{itemList}/g, itemListStr)
       .replace(/{orderNotes}/g, notes || 'Ninguna');
 

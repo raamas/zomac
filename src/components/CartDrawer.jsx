@@ -51,9 +51,9 @@ export const CartDrawer = () => {
   const [form, setForm] = useState({
     custName: '',
     custPhone: '',
-    orderType: 'Envío a Domicilio',
+    orderType: 'Entrego en Punto de Acopio',
     custAddress: '',
-    paymentMethod: 'Efectivo al Entregar / Recoger',
+    condition: 'Nuevos / Sin uso',
     notes: '',
   });
   const [isClearConfirmOpen, setIsClearConfirmOpen] = useState(false);
@@ -88,9 +88,9 @@ export const CartDrawer = () => {
         <SheetHeader className="border-b pr-12">
           <div className="flex items-center gap-2">
             <ShoppingCart size={20} className="text-whatsapp" />
-            <SheetTitle className="text-base">Tu Carrito</SheetTitle>
+            <SheetTitle className="text-base">Tu Lista de Donación</SheetTitle>
             <Badge variant="secondary">
-              {totalItems} {totalItems === 1 ? 'producto' : 'productos'}
+              {totalItems} {totalItems === 1 ? 'artículo' : 'artículos'}
             </Badge>
             {cart.length > 0 && (
               <Button
@@ -111,9 +111,9 @@ export const CartDrawer = () => {
               <div className="flex size-14 items-center justify-center rounded-full bg-muted">
                 <Smartphone size={28} className="text-muted-foreground" />
               </div>
-              <h4 className="font-display font-semibold">Tu carrito está vacío</h4>
+              <h4 className="font-display font-semibold">Tu lista de donación está vacía</h4>
               <p className="text-sm text-muted-foreground">
-                Explora el catálogo y elige los artículos de emergencia que necesitas.
+                Explora el catálogo y elige los artículos o servicios que quieres donar.
               </p>
               <Button variant="secondary" className="mt-2" onClick={() => setIsCartOpen(false)}>
                 Ver Catálogo
@@ -161,7 +161,7 @@ export const CartDrawer = () => {
 
               <div className="mt-6 space-y-4">
                 <h4 className="flex items-center gap-2 text-sm font-semibold">
-                  <UserCheck size={16} /> Datos para Confirmar Pedido
+                  <UserCheck size={16} /> Datos para Coordinar tu Donación
                 </h4>
 
                 <div className="space-y-2">
@@ -186,7 +186,7 @@ export const CartDrawer = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="orderType">Tipo de Pedido</Label>
+                    <Label htmlFor="orderType">¿Cómo entregas tu donación?</Label>
                     <Select
                       value={form.orderType}
                       onValueChange={(v) => setForm((prev) => ({ ...prev, orderType: v }))}
@@ -195,16 +195,16 @@ export const CartDrawer = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Envío a Domicilio">Envío a Domicilio</SelectItem>
-                        <SelectItem value="Recoger en Tienda">Recoger en Tienda</SelectItem>
+                        <SelectItem value="Entrego en Punto de Acopio">Entrego en Punto de Acopio</SelectItem>
+                        <SelectItem value="Recogen en mi Domicilio">Recogen en mi Domicilio</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
 
-                {form.orderType === 'Envío a Domicilio' && (
+                {form.orderType === 'Recogen en mi Domicilio' && (
                   <div className="space-y-2">
-                    <Label htmlFor="custAddress">Dirección de Entrega *</Label>
+                    <Label htmlFor="custAddress">Dirección de Recolección *</Label>
                     <Input
                       id="custAddress"
                       placeholder="Calle, número, colonia, código postal"
@@ -215,28 +215,28 @@ export const CartDrawer = () => {
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor="paymentMethod">Método de Pago Preferido</Label>
+                  <Label htmlFor="condition">Condición de los Artículos</Label>
                   <Select
-                    value={form.paymentMethod}
-                    onValueChange={(v) => setForm((prev) => ({ ...prev, paymentMethod: v }))}
+                    value={form.condition}
+                    onValueChange={(v) => setForm((prev) => ({ ...prev, condition: v }))}
                   >
-                    <SelectTrigger id="paymentMethod" className="w-full">
+                    <SelectTrigger id="condition" className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Efectivo al Entregar / Recoger">Efectivo al Entregar</SelectItem>
-                      <SelectItem value="Transferencia Bancaria">Transferencia Bancaria</SelectItem>
-                      <SelectItem value="Tarjeta (POS al Entregar)">Tarjeta de Crédito/Débito</SelectItem>
+                      <SelectItem value="Nuevos / Sin uso">Nuevos / Sin uso</SelectItem>
+                      <SelectItem value="Usados en buen estado">Usados en buen estado</SelectItem>
+                      <SelectItem value="Usados / Aceptables">Usados / Aceptables</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="notes">Notas / Instrucciones del Pedido</Label>
+                  <Label htmlFor="notes">Notas de tu Donación</Label>
                   <Textarea
                     id="notes"
                     rows={2}
-                    placeholder="Ej. Color preferido, horario de entrega, etc."
+                    placeholder="Ej. horario disponible, descripción adicional, etc."
                     value={form.notes}
                     onChange={handleInputChange}
                   />
@@ -249,10 +249,10 @@ export const CartDrawer = () => {
         {cart.length > 0 && (
           <div className="border-t bg-background p-4">
             <div className="flex items-center gap-2 rounded-lg border border-whatsapp/20 bg-whatsapp/10 px-3 py-2 text-sm font-medium text-whatsapp">
-              <Gift size={16} /> Todos los artículos son donados — sin costo
+              <Gift size={16} /> Tu donación llega a quien más lo necesita
             </div>
             <Button className="mt-3 w-full" size="lg" onClick={handleCheckout}>
-              <MessageCircle size={20} /> Enviar Pedido por WhatsApp
+              <MessageCircle size={20} /> Enviar Mi Donación por WhatsApp
             </Button>
             <Button variant="ghost" className="mt-2 w-full" onClick={handleShowQr}>
               <QrCode size={16} /> Mostrar Código QR para Escanear
@@ -265,9 +265,9 @@ export const CartDrawer = () => {
     <Dialog open={isClearConfirmOpen} onOpenChange={setIsClearConfirmOpen}>
       <DialogContent className="max-w-xs">
         <DialogHeader>
-          <DialogTitle>¿Vaciar el carrito?</DialogTitle>
+          <DialogTitle>¿Vaciar tu lista de donación?</DialogTitle>
           <DialogDescription>
-            Se eliminarán todos los productos de tu carrito. Esta acción no se puede deshacer.
+            Se eliminarán todos los artículos de tu lista de donación. Esta acción no se puede deshacer.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="gap-2 sm:justify-between">
@@ -281,7 +281,7 @@ export const CartDrawer = () => {
               setIsClearConfirmOpen(false);
             }}
           >
-            <Trash2 size={16} /> Vaciar Carrito
+            <Trash2 size={16} /> Vaciar Lista
           </Button>
         </DialogFooter>
       </DialogContent>

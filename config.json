@@ -3,6 +3,6 @@
   "whatsappNumber": "573246000009",
   "storeEmail": "n/a",
   "storeAddress": "Centro",
-  "announcementText": "🚨 Tras el sismo, estamos contigo: suministros de emergencia con envío prioritario y sin aumento de precios.",
-  "messageTemplate": "🚨 *PEDIDO POST-SISMO - {shopName}*\n----------------------------------\n👤 *Cliente:* {customerName}\n📱 *Teléfono:* {customerPhone}\n📦 *Tipo de Pedido:* {orderType}\n📍 *Dirección:* {deliveryAddress}\n💳 *Método de Pago:* {paymentMethod}\n----------------------------------\n\n📦 *ARTÍCULOS SOLICITADOS:*\n{itemList}\n\n----------------------------------\n🎁 *TODOS LOS ARTÍCULOS SON DONADOS - SIN COSTO*\n----------------------------------\n📝 *Notas:* {orderNotes}\n\n¡Gracias! Quedo a la espera de la confirmación de mi pedido."
+  "announcementText": "🚨 Tras el sismo, únete a la campaña de donación: ofrece artículos y servicios, y nosotros coordinamos la recolección.",
+  "messageTemplate": "🚨 *OFERTA DE DONACIÓN POST-SISMO - {shopName}*\n----------------------------------\n👤 *Donante:* {customerName}\n📱 *Teléfono:* {customerPhone}\n🚚 *Forma de Entrega:* {orderType}\n📍 *Dirección de Recolección:* {deliveryAddress}\n📦 *Condición de los Artículos:* {condition}\n----------------------------------\n\n📦 *ARTÍCULOS Y SERVICIOS QUE DONO:*\n{itemList}\n\n----------------------------------\n🙏 *¡GRACIAS POR TU DONACIÓN!*\n----------------------------------\n📝 *Notas:* {orderNotes}"
 }

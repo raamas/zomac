@@ -133,7 +133,7 @@ export const AdminPanel = () => {
   };
 
   const stats = [
-    { label: 'Total Modelos', value: totalModels },
+    { label: 'Total Artículos', value: totalModels },
     { label: 'Stock Total', value: `${totalUnits} uds.` },
     { label: 'Bajo Stock (<3)', value: lowStockCount },
     { label: 'Agotados', value: outOfStockCount },
@@ -147,7 +147,7 @@ export const AdminPanel = () => {
           <div>
             <h3 className="font-display text-lg font-bold">Panel de Control de Inventario y Stock</h3>
             <p className="text-sm text-muted-foreground">
-              Gestión de existencias, precios y catálogo en tiempo real
+              Gestión de existencias y catálogo de donaciones en tiempo real
             </p>
           </div>
         </div>
@@ -165,7 +165,7 @@ export const AdminPanel = () => {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
           <Button onClick={() => setShowAddForm(true)}>
-            <PlusCircle size={18} /> Agregar Nuevo Artículo
+            <PlusCircle size={18} /> Agregar Artículo o Servicio
           </Button>
           <Button variant="secondary" onClick={resetDemoStock}>
             <RotateCcw size={18} /> Restablecer Stock Demo
@@ -196,12 +196,12 @@ export const AdminPanel = () => {
       {showAddForm && (
         <Card>
           <h4 className="flex items-center gap-2 px-6 font-semibold">
-            <Plus size={18} className="text-whatsapp" /> Nuevo Artículo al Catálogo
+            <Plus size={18} className="text-whatsapp" /> Nuevo Artículo o Servicio al Catálogo
           </h4>
           <form onSubmit={handleAddSubmit} className="grid gap-4 px-6">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="np-name">Nombre del Artículo *</Label>
+                <Label htmlFor="np-name">Nombre del Artículo o Servicio *</Label>
                 <Input
                   id="np-name"
                   type="text"
@@ -228,6 +228,7 @@ export const AdminPanel = () => {
                     <SelectItem value="iluminacion">Iluminación</SelectItem>
                     <SelectItem value="comunicacion">Comunicación</SelectItem>
                     <SelectItem value="herramientas">Herramientas</SelectItem>
+                    <SelectItem value="servicios">Servicios</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

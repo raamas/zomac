@@ -16,6 +16,7 @@ const categoryLabel = (c) =>
     iluminacion: 'Iluminación',
     comunicacion: 'Comunicación',
     herramientas: 'Herramientas',
+    servicios: 'Servicios',
   }[c] || 'General');
 
 const badgeVariant = (type) =>
@@ -95,7 +96,7 @@ export const ProductGrid = () => {
                 disabled={isOutOfStock}
               >
                 {isOutOfStock ? <XCircle size={16} /> : <Plus size={16} />}
-                {isOutOfStock ? 'Agotado' : 'Agregar'}
+                {isOutOfStock ? 'Agotado' : 'Ofrecer'}
               </Button>
             </div>
           </Card>

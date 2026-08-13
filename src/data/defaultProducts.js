@@ -142,6 +142,78 @@ export const DEFAULT_PRODUCTS = [
     badge: 'Seguridad',
     badgeType: 'featured',
     description: 'Extintor multiusos clase ABC, revisado y listo para tu hogar o negocio durante la contingencia.'
+  },
+  {
+    id: 'serv-ing1',
+    name: 'Revisión Estructural de tu Vivienda',
+    category: 'servicios',
+    stock: 8,
+    badge: 'Ingeniería',
+    badgeType: 'featured',
+    description: 'Ingeniero civil revisa muros, columnas y grietas para evaluar la seguridad de tu hogar tras el sismo.'
+  },
+  {
+    id: 'serv-med1',
+    name: 'Asistencia Médica de Emergencia',
+    category: 'servicios',
+    stock: 12,
+    badge: 'Médica',
+    badgeType: 'new',
+    description: 'Personal médico atiende heridas, fracturas y urgencias básicas en tu hogar o en el punto de atención.'
+  },
+  {
+    id: 'serv-med2',
+    name: 'Apoyo Psicológico y Contención',
+    category: 'servicios',
+    stock: 10,
+    badge: 'Bienestar',
+    badgeType: 'featured',
+    description: 'Acompañamiento psicológico para sobrellevar el impacto emocional del sismo, para adultos y niños.'
+  },
+  {
+    id: 'serv-gas1',
+    name: 'Revisión de Instalaciones de Gas',
+    category: 'servicios',
+    stock: 6,
+    badge: 'Seguridad',
+    badgeType: 'featured',
+    description: 'Detección de fugas y cierre seguro de instalaciones de gas para evitar incendios posteriores.'
+  },
+  {
+    id: 'serv-elec1',
+    name: 'Revisión Eléctrica de Seguridad',
+    category: 'servicios',
+    stock: 6,
+    badge: 'Seguridad',
+    badgeType: 'featured',
+    description: 'Verificación de instalaciones eléctricas dañadas para prevenir cortocircuitos y electrocución.'
+  },
+  {
+    id: 'serv-escombro1',
+    name: 'Brigada de Retiro de Escombros',
+    category: 'servicios',
+    stock: 4,
+    badge: 'Brigada',
+    badgeType: 'new',
+    description: 'Cuadrilla con herramientas y equipo de protección para retirar escombros livianos de tu vivienda.'
+  },
+  {
+    id: 'serv-rescate1',
+    name: 'Rescate y Cuidado de Mascotas',
+    category: 'servicios',
+    stock: 9,
+    badge: 'Rescate',
+    badgeType: 'bestseller',
+    description: 'Búsqueda y atención de mascotas extraviadas, alojamiento temporal y primeros auxilios veterinarios.'
+  },
+  {
+    id: 'serv-traslado1',
+    name: 'Traslado de Emergencia / Evacuación',
+    category: 'servicios',
+    stock: 7,
+    badge: 'Movilidad',
+    badgeType: 'featured',
+    description: 'Transporte prioritario para familias, personas mayores y heridos hacia refugios o atención médica.'
   }
 ];
 
@@ -150,6 +222,6 @@ export const DEFAULT_CONFIG = {
   whatsappNumber: "5215512345678",
   storeEmail: "n/a",
   storeAddress: "Centro",
-  announcementText: "🚨 Tras el sismo, estamos contigo: suministros de emergencia con envío prioritario y sin aumento de precios.",
-  messageTemplate: "🚨 *PEDIDO POST-SISMO - {shopName}*\n----------------------------------\n👤 *Cliente:* {customerName}\n📱 *Teléfono:* {customerPhone}\n📦 *Tipo de Pedido:* {orderType}\n📍 *Dirección:* {deliveryAddress}\n💳 *Método de Pago:* {paymentMethod}\n----------------------------------\n\n📦 *ARTÍCULOS SOLICITADOS:*\n{itemList}\n\n----------------------------------\n🎁 *TODOS LOS ARTÍCULOS SON DONADOS - SIN COSTO*\n----------------------------------\n📝 *Notas:* {orderNotes}\n\n¡Gracias! Quedo a la espera de la confirmación de mi pedido."
+  announcementText: "🚨 Tras el sismo, únete a la campaña de donación: ofrece artículos y servicios, y nosotros coordinamos la recolección.",
+  messageTemplate: "🚨 *OFERTA DE DONACIÓN POST-SISMO - {shopName}*\n----------------------------------\n👤 *Donante:* {customerName}\n📱 *Teléfono:* {customerPhone}\n🚚 *Forma de Entrega:* {orderType}\n📍 *Dirección de Recolección:* {deliveryAddress}\n📦 *Condición de los Artículos:* {condition}\n----------------------------------\n\n📦 *ARTÍCULOS Y SERVICIOS QUE DONO:*\n{itemList}\n\n----------------------------------\n🙏 *¡GRACIAS POR TU DONACIÓN!*\n----------------------------------\n📝 *Notas:* {orderNotes}"
 };
